@@ -1,2 +1,8 @@
 # README
-・App_run.py: アプリケーションを実行するメインのコード
+- app.py: This is a Entry Point program file.
+
+## How to use
+Type bellow code in terminal.
+```shell
+$ flask run
+```

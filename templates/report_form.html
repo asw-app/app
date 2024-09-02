@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="static/css/report_form.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data Form</title>
+</head>
+<body>
+    <h1>Waste Management Report</h1>
+    <form form action="/report" method="post">
+        <div class="form-container">
+            <div class="date-wrapper">
+                <h2>Wastewater</h2>
+                <input type="date" id="date" name="date" placeholder="Enter quantity">
+            </div>
+            <div class="wastewater">
+                <h2>Wastewater</h2>
+                <h3>Amount of Cleaning ink</h3>
+                <h4>Press1</h4>
+                <input type="number" id="cleaning-ink-press-1" name="cleaning-ink-press-1" placeholder="Enter quantity">
+                <h4>Press2</h4>
+                <input type="number" id="cleaning-ink-press-2" name="cleaning-ink-press-2" placeholder="Enter quantity">
+                <h3>Plate Processing</h3>
+                <input type="number" id="plate-processing" name="plate-processing" placeholder="Enter quantity">
+                <h3>Fountain Solution</h3>
+                <h4>Press1</h4>
+                <input type="number" id="fountain-solution-press-1" name="fountain-solution-press-1" placeholder="Enter quantity">
+                <h4>Press2</h4>
+                <input type="number" id="fountain-solution-press-2" name="fountain-solution-press-2" placeholder="Enter quantity">
+            </div>
+    
+            <div class="wastepaper">
+                <h2>Wastepaper</h2>
+                <h3>Flaky Waste Paper</h3>
+                <input type="number" id="flaky-waste-paper" name="flaky-waste-paper" placeholder="Enter quantity">
+                <h3>Pieces Waste Paper</h3>
+                <h4>Cutting Machine 1</h4>
+                <input type="number" id="cutting-machine-1" name="cutting-machine-1" placeholder="Enter quantity">
+                <h4>Cutting Machine 2</h4>
+                <input type="number" id="cutting-machine-2" name="cutting-machine-2" placeholder="Enter quantity">
+                <h4>3-sided trimmer </h4>
+                <input type="number" id="3-sided-trimmer" name="3-sided-trimmer" placeholder="Enter quantity">
+    
+                <h3>Sheet Waste Paper</h3>
+                <h4>Press 1</h4>
+                <input type="number" id="sheet-waste-paper-1" name="sheet-waste-paper-1" placeholder="Enter quantity">
+                <h4>Press 2</h4>
+                <input type="number" id="sheet-waste-paper-2" name="sheet-waste-paper-2" placeholder="Enter quantity">
+                <h4>Press 3 (inkjet)</h4>
+                <input type="number" id="sheet-waste-paper-3" name="sheet-waste-paper-3" placeholder="Enter quantity">
+                <h4>Press 4 (electrophotography)</h4>
+                <input type="number" id="sheet-waste-paper-4" name="sheet-waste-paper-4" placeholder="Enter quantity">
+            </div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</body>
+</html>

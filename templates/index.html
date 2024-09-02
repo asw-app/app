@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+
+<body>
+    <h2>List of Waste </h2>
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Amount of Cleaning ink Press1</th>
+            <th>Amount of Cleaning ink Press2</th>
+            <th>Plate Processing</th>
+            <th>Fountain Solution Press1</th>
+            <th>Fountain Solution Press2</th>
+            <th>Sum of Water</th>
+            <th>Flaky Waste Paper</th>
+            <th>Pieces Waste Paper Cutting Machine 1</th>
+            <th>Pieces Waste Paper Cutting Machine 2</th>
+            <th>Pieces Waste Paper Cutting 3-sided trimmer</th>
+            <th>Sheet Waste Paper Press 1</th>
+            <th>Sheet Waste Paper Press 2</th>
+            <th>Sheet Waste Paper Press 3(inkjet)</th>
+            <th>Sheet Waste Paper Press 4(electrophotography)</th>
+            <th>Sum of Paper</th>
+            <th>Created Date</th>
+            <th>Updated Date</th>
+        </tr>
+        {% block content %}
+            {% for data in data_set %}
+                <tr>
+                    <th>{{ data.date.strftime('%Y/%m/%d') }}</th>
+                    <th>{{ data.cleaning_ink_press_1 }}</th>
+                    <th>{{ data.cleaning_ink_press_2 }}</th>
+                    <th>{{ data.plate_processing }}</th>
+                    <th>{{ data.fountain_solution_press_1 }}</th>
+                    <th>{{ data.fountain_solution_press_2 }}</th>
+                    <th>{{ data.water_sum }}</th>
+                    <th>{{ data.flaky_waste_paper }}</th>
+                    <th>{{ data.cutting_machine_1 }}</th>
+                    <th>{{ data.cutting_machine_2 }}</th>
+                    <th>{{ data.three_sided_trimmer }}</th>
+                    <th>{{ data.sheet_waste_paper_1 }}</th>
+                    <th>{{ data.sheet_waste_paper_2 }}</th>
+                    <th>{{ data.sheet_waste_paper_3 }}</th>
+                    <th>{{ data.sheet_waste_paper_4 }}</th>
+                    <th>{{ data.paper_sum }}</th>
+                    <th>{{ data.created_at.strftime('%Y/%m/%d') }}</th>
+                    <th>{{ data.updated_at.strftime('%Y/%m/%d') }}</th>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    </table>
+</body>
+</html>
