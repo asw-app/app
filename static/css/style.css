@@ -1,0 +1,30 @@
+body {
+    background-color: #34b83f;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.form-container {
+    text-align: center;
+}
+ 
+.wastewater,.wastepaper{
+    text-align: left;
+}
+ 
+select, input[type="number"], input[type="submit"] {
+    display: block;
+    width: 300px;
+    padding: 10px;
+    margin: 10px auto;
+    font-size: 18px;
+}
+input[type="submit"] {
+    background-color: #D32F2F;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

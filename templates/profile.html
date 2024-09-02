@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            text-align: center;
+        }
+
+        select,
+        input[type="number"],
+        input[type="submit"] {
+            display: block;
+            width: 300px;
+            padding: 10px;
+            margin: 10px auto;
+            font-size: 18px;
+        }
+
+        input[type="submit"] {
+            background-color: #D32F2F;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h1>Submit Data</h1>
+
+        <label for="wastewater">Wastewater</label>
+        <select id="wastewater" name="wastewater">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+        </select>
+        <input type="number" id="wastewater-quantity" name="wastewater-quantity" placeholder="Enter quantity">
+
+        <label for="wastepaper">Wastepaper</label>
+        <select id="wastepaper" name="wastepaper">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+        </select>
+        <input type="number" id="wastepaper-quantity" name="wastepaper-quantity" placeholder="Enter quantity">
+
+        <input type="submit" value="Submit">
+    </div>
+    <p>こちらはプロフィールページです。</p>
+    <p><a href="/">ホームページへ戻る</a></p>
+
+</body>
+
+</html>
+
+
+
+
+<!-- <!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>プロフィールページ</title>
+</head>
+
+<body>
+    <h1>プロフィールページ</h1>
+    <p>こちらはプロフィールページです。</p>
+    <p><a href="/">ホームページへ戻る</a></p>
+</body>
+
+</html> -->

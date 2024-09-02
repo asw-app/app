@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>計算機ページ</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <h1>Waste Management Report</h1>
+    <div class="form-container">
+        <div class="wastewater">
+            <h2>Wastewater</h2>
+
+            <form method="post">
+                <h3>Amount of Cleaning ink</h3>
+                <h4>Press1</h4>
+                <input type="number" id="cleaning-ink-press1" name="cleaning-ink-press1" placeholder="Enter quantity">
+                <h4>Press2</h4>
+                <input type="number" id="cleaning-ink-press2" name="cleaning-ink-press2" placeholder="Enter quantity">
+                <h3>Plate Processing</h3>
+                <input type="number" id="plate-processing" name="plate-processing" placeholder="Enter quantity">
+                <h3>Fountain Solution</h3>
+                <h4>Press1</h4>
+                <input type="number" id="fountain-solution-press1" name="fountain-solution-press1"
+                    placeholder="Enter quantity">
+                <h4>Press2</h4>
+                <input type="number" id="fountain-solution-press2" name="fountain-solution-press2"
+                    placeholder="Enter quantity">
+        </div>
+
+        <div class="wastepaper">
+            <h2>Wastepaper</h2>
+            <h3>Flaky Waste Paper</h3>
+            <input type="number" id="flaky-waste-paper" name="flaky-waste-paper1" placeholder="Enter quantity">
+            <h3>Pieces Waste Paper</h3>
+            <h4>Cutting Machine 1</h4>
+            <input type="number" id="cutting-machine-1" name="cutting-machine-1" placeholder="Enter quantity">
+            <h4>Cutting Machine 2</h4>
+            <input type="number" id="cutting-machine-2" name="cutting-machine-2" placeholder="Enter quantity">
+            <h4>3-sided trimmer </h4>
+            <input type="number" id="3-sided-trimmer" name="3-sided-trimmer" placeholder="Enter quantity">
+
+            <h3>Sheet Waste Paper</h3>
+            <h4>Press 1</h4>
+            <input type="number" id="sheet-waste-paper1" name="sheet-waste-paper1" placeholder="Enter quantity">
+            <h4>Press 2</h4>
+            <input type="number" id="sheet-waste-paper2" name="sheet-waste-paper2" placeholder="Enter quantity">
+            <h4>Press 3 (inkjet)</h4>
+            <input type="number" id="sheet-waste-paper3" name="sheet-waste-paper3" placeholder="Enter quantity">
+            <h4>Press 4 (electrophotography)</h4>
+            <input type="number" id="sheet-waste-paper4" name="sheet-waste-paper4" placeholder="Enter quantity">
+        </div>
+
+        <input type="submit" value="計算する">
+        </form>
+        {% if water_sum is not none %}
+        <p>水の合計: {{ water_sum }}</p>
+        {% endif %}
+
+        {% if paper_sum is not none %}
+        <p>紙の合計: {{ paper_sum }}</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
