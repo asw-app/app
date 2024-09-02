@@ -9,6 +9,7 @@
 ### 使い方
 ターミナルで以下のコードを入力して，実行する．
 ```shell
+$ pip install -r requirements.txt
 $ flask run
 ```
 
@@ -25,5 +26,6 @@ $ flask run
 ### How to use
 Type bellow code in terminal.
 ```shell
+$ pip install -r requirements.txt
 $ flask run
 ```
