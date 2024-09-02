@@ -1,5 +1,5 @@
 # README
-・App_run.py: アプリケーションを実行するメインのコード
+・App_run.py: アプリケーションを実行するメインのコード\\
 ・home.html: HP用のHTMLファイル
 ・calc.html: 計算機用のHTMLファイル
 
