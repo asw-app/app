@@ -12,7 +12,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            /* height: 100vh; */
             margin: 0;
         }
 
@@ -42,16 +42,18 @@
 <body>
 
     <h1>Waste Management Report</h1>
+    <br>
     <form>
         <div class="date-wrapper">
             <input type="date" id="date" name="date" placeholder="Enter quantity">
         </div>
-        <p></p>
+        <br><br>
         <!-- <div class="title">Waste Management Report</div> -->
         <div class="data">
             <input type="radio" name="radio" value="wasteWater" onclick="chgPulldown(this.form)">Wastewater&nbsp;&nbsp;
             <input type="radio" name="radio" value="wastePaper" onclick="chgPulldown(this.form)">Wastepaper&nbsp;&nbsp;
         
+            <br><br>
         <select name="hoge" >
             <option value="" selected>▽ choose your post</option>
             <option value="0"></option>
@@ -59,10 +61,13 @@
             <option value="2"></option>
             <option value="3"></option>
         <select>
+            <br>
         </div>
         <input type="number" id="quantity" name="quantity" placeholder="Enter quantity">
         
     </form>
+
+    <br><br>
 
     <input type="submit" value="Submit">
 
