@@ -41,49 +41,90 @@
 
 <body>
 
-    <div class="form-container">
-        <h1>Submit Data</h1>
+    <h1>Waste Management Report</h1>
+    <form>
+        <div class="date-wrapper">
+            <input type="date" id="date" name="date" placeholder="Enter quantity">
+        </div>
+        <p></p>
+        <!-- <div class="title">Waste Management Report</div> -->
+        <div class="data">
+            <input type="radio" name="radio" value="wasteWater" onclick="chgPulldown(this.form)">Wastewater&nbsp;&nbsp;
+            <input type="radio" name="radio" value="wastePaper" onclick="chgPulldown(this.form)">Wastepaper&nbsp;&nbsp;
+        
+        <select name="hoge" >
+            <option value="" selected>▽ choose your post</option>
+            <option value="0"></option>
+            <option value="1"></option>
+            <option value="2"></option>
+            <option value="3"></option>
+        <select>
+        </div>
+        <input type="number" id="quantity" name="quantity" placeholder="Enter quantity">
+        
+    </form>
 
-        <label for="wastewater">Wastewater</label>
-        <select id="wastewater" name="wastewater">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-        </select>
-        <input type="number" id="wastewater-quantity" name="wastewater-quantity" placeholder="Enter quantity">
+    <input type="submit" value="Submit">
 
-        <label for="wastepaper">Wastepaper</label>
-        <select id="wastepaper" name="wastepaper">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-        </select>
-        <input type="number" id="wastepaper-quantity" name="wastepaper-quantity" placeholder="Enter quantity">
-
-        <input type="submit" value="Submit">
-    </div>
-    <p>こちらはプロフィールページです。</p>
-    <p><a href="/">ホームページへ戻る</a></p>
+    <p></p>
+    <p><a href="/">Back to Home Page. </a></p>
 
 </body>
+
+<script>
+    opt_array_wasteWater = [
+		{ text: 'Cleaning ink - Press 1', value: '0' } ,
+		{ text: 'Cleaning ink - Press 2', value: '1' } ,
+		{ text: 'Plate Processing', value: '2' } ,
+		{ text: 'Fountain Solution - Press1', value: '3' },
+        { text: 'Fountain Solution - Press2', value: '4' }
+	];
+
+	opt_array_wastePaper = [
+		{ text: 'Flaky Waste Paper', value: '0' } ,
+		{ text: 'Pieces Waste Paper - Cutting Machine 1', value: '1' } ,
+		{ text: 'Pieces Waste Paper - Cutting Machine 2', value: '2' } ,
+        { text: 'Pieces Waste Paper - 3-sided trimmer', value: '3' } ,
+        { text: 'Sheet Waste Paper - Press 1', value: '4' } ,
+        { text: 'Sheet Waste Paper - Press 2', value: '5' } ,
+        { text: 'Sheet Waste Paper - Press 3', value: '6' } ,
+        { text: 'Sheet Waste Paper - Press 4', value: '7' } ,
+	];
+    //	選択リストを作る関数 
+    //
+	function chgPulldown(obj){
+    	// リセット
+		obj.hoge.disabled = false;
+    	
+		var radioSelectList = document.getElementsByName("radio");
+		var radioSelect="";
+		for(var i=0; i<radioSelectList.length; i++){
+			if (radioSelectList[i].checked) {
+				radioSelect = radioSelectList[i].value;
+				break;
+			};
+		}
+		if(radioSelect == "wasteWater"){
+            createSelection(obj, opt_array_wasteWater);
+        } else if(radioSelect == "wastePaper"){
+            createSelection(obj, opt_array_wastePaper);
+		} 
+		
+	}
+    //	選択リストを作る関数 
+    //	引数: ( selectオブジェクト, option配列  )
+    //
+	function createSelection( obj, opt_array ){
+		var doc = obj.hoge;
+		doc.length = 0;
+		
+		// 整形
+		for( var i=0; i < opt_array.length; i++){
+			doc.length++;
+			doc.options[ doc.length - 1].value = opt_array[i].value;
+			doc.options[ doc.length - 1].text  = opt_array[i].text;
+		};
+	}
+</script>
 
 </html>
-
-
-
-
-<!-- <!doctype html>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <title>プロフィールページ</title>
-</head>
-
-<body>
-    <h1>プロフィールページ</h1>
-    <p>こちらはプロフィールページです。</p>
-    <p><a href="/">ホームページへ戻る</a></p>
-</body>
-
-</html> -->
