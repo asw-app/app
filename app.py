@@ -24,24 +24,22 @@ app.app_context().push()
 #
 class WasteData(db.Model):
     id                        = db.Column('id',Integer(unsigned=True), primary_key=True ,autoincrement=True)
-    cleaning_ink_press_1      = db.Column('cleaning_ink_press_1',Integer(unsigned=True),nullable=False)
-    cleaning_ink_press_2      = db.Column('cleaning_ink_press_2',Integer(unsigned=True),nullable=False)
-    plate_processing          = db.Column('plate_processing',Integer(unsigned=True),nullable=False)
-    fountain_solution_press_1 = db.Column('fountain_solution_press_1',Integer(unsigned=True),nullable=False)
-    fountain_solution_press_2 = db.Column('fountain_solution_press_2',Integer(unsigned=True),nullable=False)
-    water_sum                 = db.Column('water_sum',Integer(unsigned=True),nullable=False)
-    flaky_waste_paper         = db.Column('flaky_waste_paper',Integer(unsigned=True),nullable=False)
-    cutting_machine_1         = db.Column('cutting_machine_1',Integer(unsigned=True),nullable=False)
-    cutting_machine_2         = db.Column('cutting_machine_2',Integer(unsigned=True),nullable=False)
-    three_sided_trimmer       = db.Column('three_sided_trimmer',Integer(unsigned=True),nullable=False)
-    sheet_waste_paper_1       = db.Column('sheet_waste_paper_1',Integer(unsigned=True),nullable=False)
-    sheet_waste_paper_2       = db.Column('sheet_waste_paper_2',Integer(unsigned=True),nullable=False)
-    sheet_waste_paper_3       = db.Column('sheet_waste_paper_3',Integer(unsigned=True),nullable=False)
-    sheet_waste_paper_4       = db.Column('sheet_waste_paper_4',Integer(unsigned=True),nullable=False)
-    paper_sum                 = db.Column('paper_sum',Integer(unsigned=True),nullable=False)
-    date                      = db.Column('date',db.Date,unique=True,default=datetime.now,nullable=False)
-    created_at                   = db.Column('created', db.DateTime, default=datetime.now, nullable=False)
-    updated_at                  = db.Column('modified', db.DateTime, default=datetime.now, nullable=False)
+    cleaning_ink_press_1      = db.Column('cleaning_ink_press_1',Integer(unsigned=True),nullable=True)
+    cleaning_ink_press_2      = db.Column('cleaning_ink_press_2',Integer(unsigned=True),nullable=True)
+    plate_processing          = db.Column('plate_processing',Integer(unsigned=True),nullable=True)
+    fountain_solution_press_1 = db.Column('fountain_solution_press_1',Integer(unsigned=True),nullable=True)
+    fountain_solution_press_2 = db.Column('fountain_solution_press_2',Integer(unsigned=True),nullable=True)
+    flaky_waste_paper         = db.Column('flaky_waste_paper',Integer(unsigned=True),nullable=True)
+    cutting_machine_1         = db.Column('cutting_machine_1',Integer(unsigned=True),nullable=True)
+    cutting_machine_2         = db.Column('cutting_machine_2',Integer(unsigned=True),nullable=True)
+    three_sided_trimmer       = db.Column('three_sided_trimmer',Integer(unsigned=True),nullable=True)
+    sheet_waste_paper_1       = db.Column('sheet_waste_paper_1',Integer(unsigned=True),nullable=True)
+    sheet_waste_paper_2       = db.Column('sheet_waste_paper_2',Integer(unsigned=True),nullable=True)
+    sheet_waste_paper_3       = db.Column('sheet_waste_paper_3',Integer(unsigned=True),nullable=True)
+    sheet_waste_paper_4       = db.Column('sheet_waste_paper_4',Integer(unsigned=True),nullable=True)
+    date                      = db.Column('date',db.Date,unique=True,default=datetime.now,nullable=True)
+    created_at                = db.Column('created', db.DateTime, default=datetime.now, nullable=True)
+    updated_at                = db.Column('modified', db.DateTime, default=datetime.now, nullable=True)
 #####
 
 db.create_all()
@@ -76,61 +74,63 @@ def index():
 #
 @app.route("/report", methods=["GET","POST"])
 def calc():
-    data = request.form
     water_sum = None
     paper_sum = None
+    id_to_culum = {
+        'cleaning-ink-press-1':      'cleaning_ink_press_1',
+        'cleaning-ink-press-2':      'cleaning_ink_press_2',
+        'plate-processing':          'plate_processing',
+        'fountain-solution-press-1': 'fountain_solution_press_1',
+        'fountain-solution-press-2': 'fountain_solution_press_2',
+        'flaky-waste-paper':         'flaky_waste_paper',
+        'cutting-machine-1':         'cutting_machine_1',
+        'cutting-machine-2':         'cutting_machine_2',
+        '3-sided-trimmer':           'three_sided_trimmer',
+        'sheet-waste-paper-1':       'sheet_waste_paper_1',
+        'sheet-waste-paper-2':       'sheet_waste_paper_2',
+        'sheet-waste-paper-3':       'sheet_waste_paper_3',
+        'sheet-waste-paper-4':       'sheet_waste_paper_4',
+        'date':                      'date'
+    }
 
     if request.method == "GET":
         # Show Report Form HTML
         return render_template('report_form.html')
     elif request.method == "POST":
-        # ユーザーが入力した数値を取得し、合計を計算
-        water_num1 = data.get("cleaning-ink-press-1", type=int) or 0
-        water_num2 = data.get("cleaning-ink-press-2", type=int) or 0
-        water_num3 = data.get("plate-processing", type=int) or 0
-        water_num4 = data.get("fountain-solution-press-1", type=int) or 0
-        water_num5 = data.get("fountain-solution-press-2", type=int) or 0
+        data_set = request.form
+        print(data_set)
 
-        # None がないかを確認しながら合計を計算
-        water_sum = (water_num1 or 0) + (water_num2 or 0) + (water_num3 or 0) + (water_num4 or 0) + (water_num5 or 0)
-        
-        paper_num1 = data.get("flaky-waste-paper", type=int) or 0
-        paper_num2 = data.get("cutting-machine-1", type=int) or 0
-        paper_num3 = data.get("cutting-machine-2", type=int) or 0
-        paper_num4 = data.get("3-sided-trimmer", type=int) or 0
-        paper_num5 = data.get("sheet-waste-paper-1", type=int) or 0
-        paper_num6 = data.get("sheet-waste-paper-2", type=int) or 0
-        paper_num7 = data.get("sheet-waste-paper-3", type=int) or 0
-        paper_num8 = data.get("sheet-waste-paper-4", type=int) or 0
+        # Search by date
+        query = db.session.query(WasteData).filter(WasteData.date == data_set.get("date")).first()
 
-        # None がないかを確認しながら合計を計算
-        paper_sum = (paper_num1 or 0) + (paper_num2 or 0) + (paper_num3 or 0) + (paper_num4 or 0) + (paper_num5 or 0) + (paper_num6 or 0) + (paper_num7 or 0) + (paper_num8 or 0)
+        if query == None:
+            # Not Exist date data
+            wasate_data = WasteData()
+            for data in data_set.keys():
+                val = data_set.get(data)
+                if val != None and len(val) > 0:
+                    setattr(wasate_data,id_to_culum[data],val)
 
-        # date time
-        date = data.get("date") or 0
+                    # date
+                    if id_to_culum[data] == 'date':
+                        setattr(wasate_data,id_to_culum[data],datetime.strptime(val, '%Y-%m-%d'))
 
-        # Create Instance
-        wasate_data = WasteData(
-                            cleaning_ink_press_1 = water_num1,
-                            cleaning_ink_press_2 = water_num2,
-                            plate_processing = water_num3,
-                            fountain_solution_press_1 = water_num4,
-                            fountain_solution_press_2 = water_num5,
-                            water_sum = water_sum,
-                            flaky_waste_paper = paper_num1,
-                            cutting_machine_1 = paper_num2,
-                            cutting_machine_2 = paper_num3,
-                            three_sided_trimmer = paper_num4,
-                            sheet_waste_paper_1 = paper_num5,
-                            sheet_waste_paper_2 = paper_num6,
-                            sheet_waste_paper_3 = paper_num7,
-                            sheet_waste_paper_4 = paper_num8,
-                            paper_sum = paper_sum,
-                            date = datetime.strptime(date, '%Y-%m-%d'))
-        
-        # Add a data to DB
-        db.session.add(wasate_data)
-        db.session.commit()
+            # Add a data to DB
+            db.session.add(wasate_data)
+            db.session.commit()
+        else:
+            # Exist date data
+            for data in data_set.keys():
+                if data != 'date':
+                    val = data_set.get(data)
+                    if val != None:
+                        # Update value
+                        setattr(query,id_to_culum[data],val)
+                    elif val != None and getattr(query,id_to_culum[data]) == None:
+                        setattr(query,id_to_culum[data],None)
+
+            # Update value
+            db.session.commit()
 
         return render_template('result.html', water_sum=water_sum, paper_sum=paper_sum)
 
