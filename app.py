@@ -98,7 +98,6 @@ def calc():
         return render_template('report_form.html')
     elif request.method == "POST":
         data_set = request.form
-        print(data_set)
 
         # Search by date
         query = db.session.query(WasteData).filter(WasteData.date == data_set.get("date")).first()
@@ -106,28 +105,18 @@ def calc():
         if query == None:
             # Not Exist date data
             wasate_data = WasteData()
-            for data in data_set.keys():
-                val = data_set.get(data)
-                if val != None and len(val) > 0:
-                    setattr(wasate_data,id_to_culum[data],val)
-
-                    # date
-                    if id_to_culum[data] == 'date':
-                        setattr(wasate_data,id_to_culum[data],datetime.strptime(val, '%Y-%m-%d'))
+            if data_set.get('date') != None:
+                setattr(wasate_data,'date',datetime.strptime(data_set.get('date'), '%Y-%m-%d'))
+            if data_set.get('selector') != None and data_set.get('selector') != '' and data_set.get('quantity') != None and data_set.get('quantity') != '':
+                setattr(wasate_data,id_to_culum[data_set.get('selector')],data_set.get('quantity'))
 
             # Add a data to DB
             db.session.add(wasate_data)
             db.session.commit()
         else:
             # Exist date data
-            for data in data_set.keys():
-                if data != 'date':
-                    val = data_set.get(data)
-                    if val != None:
-                        # Update value
-                        setattr(query,id_to_culum[data],val)
-                    elif val != None and getattr(query,id_to_culum[data]) == None:
-                        setattr(query,id_to_culum[data],None)
+            if data_set.get('selector') != None and data_set.get('selector') != '' and data_set.get('quantity') != None and data_set.get('quantity') != '':
+                setattr(query,id_to_culum[data_set.get('selector')],data_set.get('quantity'))
 
             # Update value
             db.session.commit()
