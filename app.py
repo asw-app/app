@@ -66,7 +66,7 @@ def profile():
 @app.route("/index", methods=["GET"])
 def index():
     # Get all data from db
-    data_set = db.session.query(WasteData).all()
+    data_set = db.session.query(WasteData).order_by(WasteData.date).all()
     return render_template('index.html', data_set=data_set)
 
 #####
