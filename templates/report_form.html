@@ -1,59 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="static/css/report_form.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Data Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+            margin: 0;
+        }
+
+        .form-container {
+            text-align: center;
+        }
+
+        select,
+        input[type="number"],
+        input[type="submit"] {
+            display: block;
+            width: 300px;
+            padding: 10px;
+            margin: 10px auto;
+            font-size: 18px;
+        }
+
+        input[type="submit"] {
+            background-color: #D32F2F;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
+
     <h1>Waste Management Report</h1>
-    <form form action="/report" method="post">
-        <div class="form-container">
-            <div class="date-wrapper">
-                <h2>Wastewater</h2>
-                <input type="date" id="date" name="date" placeholder="Enter quantity">
-            </div>
-            <div class="wastewater">
-                <h2>Wastewater</h2>
-                <h3>Amount of Cleaning ink</h3>
-                <h4>Press1</h4>
-                <input type="number" id="cleaning-ink-press-1" name="cleaning-ink-press-1" placeholder="Enter quantity">
-                <h4>Press2</h4>
-                <input type="number" id="cleaning-ink-press-2" name="cleaning-ink-press-2" placeholder="Enter quantity">
-                <h3>Plate Processing</h3>
-                <input type="number" id="plate-processing" name="plate-processing" placeholder="Enter quantity">
-                <h3>Fountain Solution</h3>
-                <h4>Press1</h4>
-                <input type="number" id="fountain-solution-press-1" name="fountain-solution-press-1" placeholder="Enter quantity">
-                <h4>Press2</h4>
-                <input type="number" id="fountain-solution-press-2" name="fountain-solution-press-2" placeholder="Enter quantity">
-            </div>
-    
-            <div class="wastepaper">
-                <h2>Wastepaper</h2>
-                <h3>Flaky Waste Paper</h3>
-                <input type="number" id="flaky-waste-paper" name="flaky-waste-paper" placeholder="Enter quantity">
-                <h3>Pieces Waste Paper</h3>
-                <h4>Cutting Machine 1</h4>
-                <input type="number" id="cutting-machine-1" name="cutting-machine-1" placeholder="Enter quantity">
-                <h4>Cutting Machine 2</h4>
-                <input type="number" id="cutting-machine-2" name="cutting-machine-2" placeholder="Enter quantity">
-                <h4>3-sided trimmer </h4>
-                <input type="number" id="3-sided-trimmer" name="3-sided-trimmer" placeholder="Enter quantity">
-    
-                <h3>Sheet Waste Paper</h3>
-                <h4>Press 1</h4>
-                <input type="number" id="sheet-waste-paper-1" name="sheet-waste-paper-1" placeholder="Enter quantity">
-                <h4>Press 2</h4>
-                <input type="number" id="sheet-waste-paper-2" name="sheet-waste-paper-2" placeholder="Enter quantity">
-                <h4>Press 3 (inkjet)</h4>
-                <input type="number" id="sheet-waste-paper-3" name="sheet-waste-paper-3" placeholder="Enter quantity">
-                <h4>Press 4 (electrophotography)</h4>
-                <input type="number" id="sheet-waste-paper-4" name="sheet-waste-paper-4" placeholder="Enter quantity">
-            </div>
-            <input type="submit" value="Submit">
+    <br>
+    <form action="/report" method="post">
+        <div class="date-wrapper">
+            <input type="date" id="date" name="date" placeholder="Enter quantity">
         </div>
+        <br><br>
+        <!-- <div class="title">Waste Management Report</div> -->
+        <div class="data">
+            <input type="radio" name="radio" value="wasteWater" onclick="chgPulldown(this.form)">Wastewater&nbsp;&nbsp;
+            <input type="radio" name="radio" value="wastePaper" onclick="chgPulldown(this.form)">Wastepaper&nbsp;&nbsp;
+        
+            <br><br>
+        <select name="selector" >
+        <select>
+            <br>
+        </div>
+        <input type="number" id="quantity" name="quantity" placeholder="Enter quantity">
+        <input type="submit" value="Submit">
     </form>
+
+    <br><br>
+
+    
+
+    <p></p>
+    <p><a href="/">Back to Home Page. </a></p>
+
 </body>
+
+<script>
+    opt_array_wasteWater = [
+		{ text: 'Cleaning ink - Press 1', value: 'cleaning-ink-press-1' } ,
+		{ text: 'Cleaning ink - Press 2', value: 'cleaning-ink-press-2' } ,
+		{ text: 'Plate Processing', value: 'plate-processing' } ,
+		{ text: 'Fountain Solution - Press1', value: 'fountain-solution-press-1' },
+        { text: 'Fountain Solution - Press2', value: 'fountain-solution-press-2' }
+	];
+
+	opt_array_wastePaper = [
+		{ text: 'Flaky Waste Paper', value: 'flaky-waste-paper' } ,
+		{ text: 'Pieces Waste Paper - Cutting Machine 1', value: 'cutting-machine-1' } ,
+		{ text: 'Pieces Waste Paper - Cutting Machine 2', value: 'cutting-machine-2' } ,
+        { text: 'Pieces Waste Paper - 3-sided trimmer', value: '3-sided-trimmer' } ,
+        { text: 'Sheet Waste Paper - Press 1', value: 'sheet-waste-paper-1' } ,
+        { text: 'Sheet Waste Paper - Press 2', value: 'sheet-waste-paper-2' } ,
+        { text: 'Sheet Waste Paper - Press 3', value: 'sheet-waste-paper-3' } ,
+        { text: 'Sheet Waste Paper - Press 4', value: 'sheet-waste-paper-4' } ,
+	];
+    //	選択リストを作る関数 
+    //
+	function chgPulldown(obj){
+    	// リセット
+		obj.selector.disabled = false;
+    	
+		var radioSelectList = document.getElementsByName("radio");
+		var radioSelect="";
+		for(var i=0; i<radioSelectList.length; i++){
+			if (radioSelectList[i].checked) {
+				radioSelect = radioSelectList[i].value;
+				break;
+			};
+		}
+		if(radioSelect == "wasteWater"){
+            createSelection(obj, opt_array_wasteWater);
+        } else if(radioSelect == "wastePaper"){
+            createSelection(obj, opt_array_wastePaper);
+		} 
+		
+	}
+    //	選択リストを作る関数 
+    //	引数: ( selectオブジェクト, option配列  )
+    //
+	function createSelection( obj, opt_array ){
+		var doc = obj.selector;
+		doc.length = 0;
+		
+		// 整形
+		for( var i=0; i < opt_array.length; i++){
+			doc.length++;
+			doc.options[ doc.length - 1].value = opt_array[i].value;
+			doc.options[ doc.length - 1].text  = opt_array[i].text;
+		};
+	}
+</script>
+
 </html>
