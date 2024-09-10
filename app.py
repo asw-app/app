@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import INTEGER as Integer
 
-from datetime import datetimegit 
+from datetime import datetime
 import os
 
 app = Flask(__name__)
