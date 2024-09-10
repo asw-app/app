@@ -8,8 +8,8 @@
 
 <body>
     <h2>List of Waste </h2>
-    <table border="1">
-        <tr>
+    <table border="1"> <!-- 表を作成. border="1" で, テーブルに枠線を表示 -->
+        <tr>   <!-- テーブルヘッダー -->
             <th>Date</th>
             <th>Amount of Cleaning ink Press1</th>
             <th>Amount of Cleaning ink Press2</th>
@@ -29,7 +29,7 @@
             <th>Created Date</th>
             <th>Updated Date</th>
         </tr>
-        {% block content %}
+        {% block content %} <!--ブロックを定義. このブロック内で動的にデータを表示. -->
             {% for data in data_set %}
                 <tr>
                     <th>{{ data.date.strftime('%Y/%m/%d') }}</th>

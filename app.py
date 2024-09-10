@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import INTEGER as Integer
 
-from datetime import datetime
+from datetime import datetimegit 
 import os
 
 app = Flask(__name__)
@@ -82,7 +82,6 @@ def home():
 def index():
     # Get all data from db
     data_set = db.session.query(WasteData).order_by(WasteData.date).all()
-
     return render_template('index.html', data_set=data_set)
 
 #####
