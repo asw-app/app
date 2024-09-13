@@ -1,11 +1,17 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import INTEGER as Integer
+from authlib.integrations.flask_client import OAuth
 
+import functools
 from datetime import datetime
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Flask(__name__)
+app.secret_key = os.getenv("APP_SECRET")
 
 ##### 
 # db settings
@@ -17,6 +23,19 @@ app.config['SQLALCHEMY_ECHO']=True
 
 db = SQLAlchemy(app)
 app.app_context().push()
+#####
+
+##### 
+# db settings
+#
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    client_kwargs={'scope': 'openid profile email'},
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
+)
 #####
 
 #####
@@ -43,7 +62,6 @@ class WasteData(db.Model):
     created_at                = db.Column('created', db.DateTime, default=datetime.now, nullable=True)
     updated_at                = db.Column('modified', db.DateTime, default=datetime.now, nullable=True)
 #####
-
 db.create_all()
 
 id_to_culum = {
@@ -63,22 +81,41 @@ id_to_culum = {
     'date':                      'date'
 }
 
+def login_required(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        if session.get("user") is None:
+            return redirect(url_for("login"))
+        else:
+            return func(*args, **kwargs)
+    return wrapper
+
 @app.route("/", methods=["GET"])
+@login_required
 def home():
     return render_template('home.html')
 
-# @app.route("/contact", methods=["GET", "POST"])
-# def contact():
-#     if request.method == "POST":
-#         # フォームからのデータを処理
-#         return render_template('contact.html', message=True)
-#     else:
-#         return render_template('contact.html', message=False)
+@app.route('/login', methods=["GET"])
+def login():
+    redirect_uri = url_for('auth_callback', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/')
+
+@app.route('/auth/callback')
+def auth_callback():
+    token = oauth.google.authorize_access_token()
+    session['user'] = token['userinfo']
+    return redirect('/')
 
 #####
 # Index View
 #
 @app.route("/index", methods=["GET"])
+@login_required
 def index():
     # Get all data from db
     data_set = db.session.query(WasteData).order_by(WasteData.date).all()
@@ -88,6 +125,7 @@ def index():
 # Report View
 #
 @app.route("/report", methods=["GET","POST"])
+@login_required
 def calc():
     water_sum = None
     paper_sum = None
