@@ -42,17 +42,30 @@ async function fetchData() {
     const month = document.getElementById('month').value;
     const parent = document.querySelector('.index-wrapper');
 
-    while( parent.firstChild ){
-        parent.removeChild( parent.firstChild );
+    while( parent.childElementCount > 1){
+        parent.lastElementChild.remove();
     }
 
     const res = await fetch(`/get-data?year=${year}&month=${month}`);
     const data = await res.json();
 
     if (data.data.length === 0) {
+        document.getElementById('water-sum').innerHTML = '-';
+        document.getElementById('paper-sum').innerHTML = '-';
         const newElement = `<div class="no-data-text">No data</div>`;
         parent.insertAdjacentHTML('beforeend',newElement);
     }else{
+        console.log(data);
+        if(data.sum[0] != null){
+            document.getElementById('water-sum').innerHTML = data.sum[0];
+        }else{
+            document.getElementById('water-sum').innerHTML = '-';
+        }
+        if(data.sum[1] != null){
+            document.getElementById('paper-sum').innerHTML = data.sum[1];
+        }else{
+            document.getElementById('paper-sum').innerHTML = '-';
+        }
         data.data.forEach(item => {
             const newElement = 
             `<div class="item-data">

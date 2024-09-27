@@ -140,7 +140,6 @@ def logout():
 def auth_callback():
     try:
         token = oauth.google.authorize_access_token()
-        print(token['userinfo'])
         session['user'] = token['userinfo']
         return redirect('/')
     except:
@@ -173,7 +172,7 @@ def index():
 def getData():
     year = int(request.args.get('year'))
     month = int(request.args.get('month'))
-    print(month)
+
     start_date = datetime.datetime(year, month, 1)
     if month == 1:
         end_date = datetime.datetime(year - 1, 12, 1)
@@ -182,9 +181,9 @@ def getData():
     else:
         end_date = datetime.datetime(year, month + 1, 1)
     data_set = db.session.query(WasteData).order_by(WasteData.date).filter(WasteData.date >= start_date,WasteData.date < end_date).all()
-    print(month)
-    print([data.to_dict() for data in data_set])
-    return jsonify({'data':[data.to_dict() for data in data_set]})
+    sum = db.session.query(func.sum(WasteData.water_sum),func.sum(WasteData.paper_sum)).filter(WasteData.date >= start_date,WasteData.date < end_date)
+
+    return jsonify({'data':[data.to_dict() for data in data_set],'sum':list(sum[0])})
 
 #####
 # Report View
