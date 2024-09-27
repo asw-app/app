@@ -1,58 +1,206 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-</head>
+{% extends 'layout.html' %}
 
-<body>
-    <h2>List of Waste </h2>
-    <table border="1"> <!-- 表を作成. border="1" で, テーブルに枠線を表示 -->
-        <tr>   <!-- テーブルヘッダー -->
-            <th>Date</th>
-            <th>Amount of Cleaning ink Press1</th>
-            <th>Amount of Cleaning ink Press2</th>
-            <th>Plate Processing</th>
-            <th>Fountain Solution Press1</th>
-            <th>Fountain Solution Press2</th>
-            <th>Sum of Water</th>
-            <th>Flaky Waste Paper</th>
-            <th>Pieces Waste Paper Cutting Machine 1</th>
-            <th>Pieces Waste Paper Cutting Machine 2</th>
-            <th>Pieces Waste Paper Cutting 3-sided trimmer</th>
-            <th>Sheet Waste Paper Press 1</th>
-            <th>Sheet Waste Paper Press 2</th>
-            <th>Sheet Waste Paper Press 3(inkjet)</th>
-            <th>Sheet Waste Paper Press 4(electrophotography)</th>
-            <th>Sum of Paper</th>
-            <th>Created Date</th>
-            <th>Updated Date</th>
-        </tr>
-        {% block content %} <!--ブロックを定義. このブロック内で動的にデータを表示. -->
-            {% for data in data_set %}
-                <tr>
-                    <th>{{ data.date.strftime('%Y/%m/%d') }}</th>
-                    <th>{{ data.cleaning_ink_press_1 }}</th>
-                    <th>{{ data.cleaning_ink_press_2 }}</th>
-                    <th>{{ data.plate_processing }}</th>
-                    <th>{{ data.fountain_solution_press_1 }}</th>
-                    <th>{{ data.fountain_solution_press_2 }}</th>
-                    <th>{{ data.water_sum }}</th>
-                    <th>{{ data.flaky_waste_paper }}</th>
-                    <th>{{ data.cutting_machine_1 }}</th>
-                    <th>{{ data.cutting_machine_2 }}</th>
-                    <th>{{ data.three_sided_trimmer }}</th>
-                    <th>{{ data.sheet_waste_paper_1 }}</th>
-                    <th>{{ data.sheet_waste_paper_2 }}</th>
-                    <th>{{ data.sheet_waste_paper_3 }}</th>
-                    <th>{{ data.sheet_waste_paper_4 }}</th>
-                    <th>{{ data.paper_sum }}</th>
-                    <th>{{ data.created_at.strftime('%Y/%m/%d') }}</th>
-                    <th>{{ data.updated_at.strftime('%Y/%m/%d') }}</th>
-                </tr>
+{% block head %}
+<title>Index</title>
+<link rel="stylesheet" href="/static/css/index.css">
+{% endblock  %}
+
+{% block body %}
+<div class="content-wrapper">
+    <h1>List of Waste</h1>
+    <div id="date"></div>
+    <div class="select-wrapper">
+        <select name="year" id="year" onchange="fetchData()">
+            {% for y in year %}
+                <option value="{{ y }}">{{ y }}</option>
             {% endfor %}
-        {% endblock %}
-    </table>
-</body>
-</html>
+        </select>
+        <div class="slash">/</div>
+        <select name="month" id="month" onchange="fetchData()">
+            {% for month in range(1, 13) %}
+                <option value="{{ month }}">{{ month }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="index-wrapper">
+        <div class="monthly-sum">
+            <div class="monthly-category-wrapper div">
+                <div class="monthly-title">
+                    Water
+                </div>
+                <div class="monthly-num">
+                    {% if data_set == None %}
+                    -
+                    {% else %}
+                        {{ sum_data[0] }}
+                    {% endif %}
+                    <span class="monthly-unit">L</span>
+                </div>
+                
+            </div>
+            <div class="monthly-category-wrapper">
+                <div class="monthly-title">
+                    Paper
+                </div>
+                <div class="monthly-num">
+                    {% if data_set == None %}
+                    -
+                    {% else %}
+                        {{ sum_data[1] }}
+                    {% endif %}
+                    <span class="monthly-unit">kg</span>
+                </div>
+            </div>
+        </div>
+        {% if data_set == None %}
+        <div class="no-data-text">No data</div>
+        {% else %}
+            {% for data in data_set %}
+                <div class="item-data">
+                    <div class="date">
+                        {{data.date.strftime('%m/%d')}}
+                    </div>
+                    <div class="data-wrapper">
+                        <div class="summary">
+                            <div class="water-sum">
+                                <div class="text">Water</div>
+                                <div class="sum" id="water_sum">{{ data.water_sum }}L</div>
+                            </div>
+                            <div class="paper-sum">
+                                <div class="text">Paper</div>
+                                <div class="sum" id="paper_sum">{{ data.paper_sum }}kg</div>
+                            </div>
+                            <div class="icon">
+                                <img src="{{ url_for('static', filename='/images/chevron_right_24dp_1A1A1A_FILL0_wght400_GRAD0_opsz24.svg')}}" alt="">
+                            </div>
+                        </div>
+                        <hr class="divider" style="display: none;">
+                        <div class="detail-wrapper" style="display: none;">
+                            <div class="water-wrapper">
+                                <div class="detail">
+                                    <div class="detail-item-group">
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Cleaning ink Press1
+                                            </div>
+                                            <div class="detail-data" id="cleaning_ink_press_1">
+                                                {{ data.cleaning_ink_press_1 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Cleaning ink Press2
+                                            </div>
+                                            <div class="detail-data" id="cleaning_ink_press_2">
+                                                {{ data.cleaning_ink_press_2 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Plate Processing
+                                            </div>
+                                            <div class="detail-data" id="plate_processing">
+                                                {{ data.plate_processing }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Fountain Solution Press1
+                                            </div>
+                                            <div class="detail-data" id="fountain_solution_press_1">
+                                                {{ data.fountain_solution_press_1 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Fountain Solution Press2
+                                            </div>
+                                            <div class="detail-data" id="fountain_solution_press_2">
+                                                {{ data.fountain_solution_press_2 }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="paper-wrapper">
+                                <div class="detail">
+                                    <div class="detail-item-group">
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Flaky Waste Paper
+                                            </div>
+                                            <div class="detail-data">
+                                                {{ data.flaky_waste_paper }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Pieces Waste Paper Cutting Machine 1
+                                            </div>
+                                            <div class="detail-data" id="cutting_machine_1">
+                                                {{ data.cutting_machine_1 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Pieces Waste Paper Cutting Machine 2
+                                            </div>
+                                            <div class="detail-data" id="cutting_machine_2">
+                                                {{ data.cutting_machine_2 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Pieces Waste Paper Cutting 3-sided trimmer
+                                            </div>
+                                            <div class="detail-data" id="three_sided_trimmer">
+                                                {{ data.three_sided_trimmer }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Sheet Waste Paper Press 1
+                                            </div>
+                                            <div class="detail-data" id="sheet_waste_paper_1">
+                                                {{ data.sheet_waste_paper_1 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Sheet Waste Paper Press 2
+                                            </div>
+                                            <div class="detail-data" id="sheet_waste_paper_2">
+                                                {{ data.sheet_waste_paper_2 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Sheet Waste Paper Press 3
+                                            </div>
+                                            <div class="detail-data" id="sheet_waste_paper_3">
+                                                {{ data.sheet_waste_paper_3 }}
+                                            </div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">
+                                                Sheet Waste Paper Press 4(electrophotography)
+                                            </div>
+                                            <div class="detail-data" id="sheet_waste_paper_4">
+                                                {{ data.sheet_waste_paper_4 }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="btn-wrapper">
+            <a href="/" class="btn back-btn">Top</a>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='javascript/index.js') }}"></script>
+{% endblock  %}
