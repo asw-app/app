@@ -1,17 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-</head>
+{% extends 'layout.html' %}
 
-<body>
+{% block head %}
+<title>Waste Record App</title>
+<link rel="stylesheet" href="/static/css/home.css">
+{% endblock  %}
 
-    <h1>Home Page</h1>
-    <p>This is a home page.</p>
-    <p><a href="/report">Report Page(You can report a waste data.)</a></p>
-    <p><a href="/index">Index Page(You can see all a record.)</a></p>
+{% block body %}
+<div class="content-wrapper">
+    <h1>Waste Record App</h1>
+    <div id="date"></div>
 
-</body>
-</html>
+    <div class="data-wrapper">
+        <h2 class="h2-water">Water(L)</h2>
+        <div class="water-wrapper">
+            <div class="item-group">
+                <div>
+                    {% for label in keys[0:5] %}
+                    <div class="item">
+                        <div class="item-label">
+                            {{ label }}
+                        </div>
+                        <div class="item-data">
+                            {% if data == None or data[id_to_culum[label]] == None %}
+                            -
+                            {% else %}
+                                {{ data[id_to_culum[label]] }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <h2 class="h2-paper">Paper(kg)</h2>
+        <div class="paper-wrapper">
+            <div class="item-group">
+                <div>
+                    {% for label in keys[5:13] %}
+                    <div class="item">                    
+                        <div class="item-label">
+                            {{ label }}
+                        </div>
+                        <div class="item-data">
+                            {% if data == None or data[id_to_culum[label]] == None %}
+                            -
+                            {% else %}
+                                {{ data[id_to_culum[label]] }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <a href="/report" class="btn report-btn">Report</a>
+        <a href="/index" class="btn index-btn">Index</a>
+        <a href="/logout" class="btn logout-btn">Logout</a>
+        <a href="/account/delete" class="btn delete-btn">Delete Account</a>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='javascript/home.js') }}"></script>
+{% endblock  %}

@@ -1,0 +1,101 @@
+h1{
+    text-align: center;
+    margin-bottom: 8px;
+}
+#date{
+    text-align: center;
+    margin-top: 16px;
+    font-size: 20px;
+}
+h2{
+    font-size: 28;
+}
+.report-btn{
+    background-color: #0017C1;
+    color: #ffffff;
+    font-weight: 700;
+}
+.index-btn{
+    color: #0017C1;
+    border-color: #0017C1;
+    border-style: solid;
+    border-width: 2px;
+}
+.logout-btn{
+    color: #EC0000;
+    border-color: #EC0000;
+    border-style: solid;
+    border-width: 2px;
+}
+.water-wrapper,.paper-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.item-name-group,.item-data-group{
+    display: inline-block;
+}
+.item-group{
+    width: 100%;
+}
+.item{
+    width: 100%;
+    padding-top: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+.item-label{
+    display: inline-block;
+    width: 75%;
+}
+.item-data{
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+}
+
+.delete-btn{
+    color: #EC0000;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    width: 100%;
+    text-align: center;
+}
+
+
+@media (width < 520px) {
+    .content-wrapper{
+        margin-bottom: 56px;
+    }
+    .item{
+        padding-top: 4px;
+    }
+    .h2-water{
+        margin-top: 8px;
+    }
+    .h2-paper{
+        margin-top: 16px;
+    }
+    .btn-group{
+        margin-top: 32px;
+    }
+}
+@media (520px <= width) {
+    html,body {
+        overflow: hidden;
+    }
+    .content-wrapper{
+        height: 100vh;
+    }
+    .item{
+        padding-top: 8px;
+    }
+    .h2-water{
+        margin-top: 24px;
+    }
+    .h2-paper{
+        margin-top: 32px;
+    }
+    .btn-group{
+        margin-top: 48px;
+    }
+}

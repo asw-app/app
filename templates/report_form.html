@@ -1,130 +1,47 @@
-<!doctype html>
-<html lang="en">
+{% extends 'layout.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Data Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /* height: 100vh; */
-            margin: 0;
-        }
+{% block head %}
+<title>Submit Data Form</title>
+<link rel="stylesheet" href="/static/css/report_form.css">
+{% endblock  %}
 
-        .form-container {
-            text-align: center;
-        }
-
-        select,
-        input[type="number"],
-        input[type="submit"] {
-            display: block;
-            width: 300px;
-            padding: 10px;
-            margin: 10px auto;
-            font-size: 18px;
-        }
-
-        input[type="submit"] {
-            background-color: #D32F2F;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-
-    <h1>Waste Management Report</h1>
-    <br>
-    <form action="/report" method="post">
-        <div class="date-wrapper">
-            <input type="date" id="date" name="date" placeholder="Enter quantity">
+{% block body %}
+<div class="content-wrapper">
+<h1>Report Form</h1>
+<form action="/report" method="post">
+    <div class="date-wrapper">
+        <div class="description">Date</div>
+        <input type="date" id="date" name="date" placeholder="Enter quantity">
+    </div>
+    <div class="radio-button-wrapper gap">
+        <div class="description">Category</div>
+        <div class="radio-button radio-button-first">
+            <input type="radio" id="select_water" name="radio" value="wasteWater" onclick="chgPulldown(this.form)">
+            <label for="select_water">Water</label>
         </div>
-        <br><br>
-        <!-- <div class="title">Waste Management Report</div> -->
-        <div class="data">
-            <input type="radio" name="radio" value="wasteWater" onclick="chgPulldown(this.form)">Wastewater&nbsp;&nbsp;
-            <input type="radio" name="radio" value="wastePaper" onclick="chgPulldown(this.form)">Wastepaper&nbsp;&nbsp;
-        
-            <br><br>
-        <select name="selector" >
-        <select>
-            <br>
+        <div class="radio-button">
+            <input type="radio" id="select_paper" name="radio" value="wastePaper" onclick="chgPulldown(this.form)">
+            <label for="select_paper">Paper</label>
         </div>
-        <input type="number" id="quantity" name="quantity" placeholder="Enter quantity">
-        <input type="submit" value="Submit">
-    </form>
+    </div>
+    <div class="selector-wrapper gap">
+        <div class="description">Item</div>
+        <select name="selector"></select>
+    </div>
 
-    <br><br>
+    <div class="field-wrapper gap">
+        <div class="description">Quantity</div>
+        <input type="number" id="quantity" name="quantity" placeholder="100">
+    </div>
+    <div class="btn-wrapper">
+        <div class="btn-group">
+            <input type="submit" value="Submit">
+            <a href="/" class="btn back-btn">Top</a>
+        </div>
+    </div>
+</form>
 
-    
-
-    <p></p>
-    <p><a href="/">Back to Home Page. </a></p>
-
-</body>
-
-<script>
-    opt_array_wasteWater = [
-		{ text: 'Cleaning ink - Press 1', value: 'cleaning-ink-press-1' } ,
-		{ text: 'Cleaning ink - Press 2', value: 'cleaning-ink-press-2' } ,
-		{ text: 'Plate Processing', value: 'plate-processing' } ,
-		{ text: 'Fountain Solution - Press1', value: 'fountain-solution-press-1' },
-        { text: 'Fountain Solution - Press2', value: 'fountain-solution-press-2' }
-	];
-
-	opt_array_wastePaper = [
-		{ text: 'Flaky Waste Paper', value: 'flaky-waste-paper' } ,
-		{ text: 'Pieces Waste Paper - Cutting Machine 1', value: 'cutting-machine-1' } ,
-		{ text: 'Pieces Waste Paper - Cutting Machine 2', value: 'cutting-machine-2' } ,
-        { text: 'Pieces Waste Paper - 3-sided trimmer', value: '3-sided-trimmer' } ,
-        { text: 'Sheet Waste Paper - Press 1', value: 'sheet-waste-paper-1' } ,
-        { text: 'Sheet Waste Paper - Press 2', value: 'sheet-waste-paper-2' } ,
-        { text: 'Sheet Waste Paper - Press 3', value: 'sheet-waste-paper-3' } ,
-        { text: 'Sheet Waste Paper - Press 4', value: 'sheet-waste-paper-4' } ,
-	];
-    //	選択リストを作る関数 
-    //
-	function chgPulldown(obj){
-    	// リセット
-		obj.selector.disabled = false;
-    	
-		var radioSelectList = document.getElementsByName("radio");
-		var radioSelect="";
-		for(var i=0; i<radioSelectList.length; i++){
-			if (radioSelectList[i].checked) {
-				radioSelect = radioSelectList[i].value;
-				break;
-			};
-		}
-		if(radioSelect == "wasteWater"){
-            createSelection(obj, opt_array_wasteWater);
-        } else if(radioSelect == "wastePaper"){
-            createSelection(obj, opt_array_wastePaper);
-		} 
-		
-	}
-    //	選択リストを作る関数 
-    //	引数: ( selectオブジェクト, option配列  )
-    //
-	function createSelection( obj, opt_array ){
-		var doc = obj.selector;
-		doc.length = 0;
-		
-		// 整形
-		for( var i=0; i < opt_array.length; i++){
-			doc.length++;
-			doc.options[ doc.length - 1].value = opt_array[i].value;
-			doc.options[ doc.length - 1].text  = opt_array[i].text;
-		};
-	}
-</script>
-
-</html>
+  
+</div>
+<script src="{{ url_for('static', filename='javascript/report_form.js') }}"></script>
+{% endblock  %}

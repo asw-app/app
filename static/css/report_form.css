@@ -1,30 +1,112 @@
-body {
-    background-color: #34b83f;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+@media (width < 520px) {
+    .content-wrapper{
+        padding: 0 24px 0 24px;
+    }
+    .gap{
+        margin-top: 16px;
+    }
+    h1{
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 32px;
+    }
+    .description{
+        font-size: 28px;
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+    input[type="date"]{
+        height: 48px;
+        width: 128px;
+        border-radius: 4px;
+        font-size: 16px;
+        color: #1A1A1A;
+    }
+    select{
+        width: 100%;
+        height: 48px;
+    }
+    .radio-button-first{
+        padding-bottom: 16px;
+    }
+    input[type="number"]{
+        height: 48px;
+        width: 128px;
+    }
+    input[type="submit"] {
+        width: 100%;
+        height: 48px;
+        background-color: #0017C1;
+        color: #ffffff;
+        border-radius: 4px;
+        font-weight: 700;
+        margin: 0px auto;
+    }
+    .btn-wrapper{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 40px;
+    }
+    .btn-group{
+        width: 80%;
+        margin: 0 auto;
+    }
 }
-.form-container {
-    text-align: center;
-}
- 
-.wastewater,.wastepaper{
-    text-align: left;
-}
- 
-select, input[type="number"], input[type="submit"] {
-    display: block;
-    width: 300px;
-    padding: 10px;
-    margin: 10px auto;
-    font-size: 18px;
-}
-input[type="submit"] {
-    background-color: #D32F2F;
-    color: white;
-    border: none;
-    cursor: pointer;
+
+@media (520px <= width) {
+    .content-wrapper{
+        padding:0 30vw;
+    }
+    .gap{
+        margin-top: 24px;
+    }
+    h1{
+        text-align: center;
+        margin-bottom: 36px;
+        font-size: 40px;
+    }
+    .description{
+        font-size: 32px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    input[type="date"]{
+        height: 48px;
+        width: 128px;
+        border-radius: 4px;
+        font-size: 16px;
+        color: #1A1A1A;
+    }
+    select{
+        width: 70%;
+        height: 48px;
+    }
+    .radio-button-first{
+        padding-bottom: 16px;
+    }
+    input[type="number"]{
+        height: 48px;
+        width: 128px;
+    }
+    input[type="submit"] {
+        width: 100%;
+        height: 48px;
+        background-color: #0017C1;
+        color: #ffffff;
+        border-radius: 4px;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0px auto;
+    }
+    .btn-wrapper{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 40px;
+    }
+    .btn-group{
+        width: 50%;
+        margin: 0 auto;
+    }
 }
